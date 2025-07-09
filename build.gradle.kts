@@ -27,12 +27,6 @@ tasks.jar {
     }
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(23))
-    }
-}
-
 
 tasks.test {
     useJUnitPlatform()

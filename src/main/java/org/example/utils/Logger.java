@@ -6,17 +6,18 @@ public class Logger {
     public static final String ANSI_YELLOW = "\u001B[33m";
     private static final String ANSI_BLUE = "\u001B[34m";
     private static final String ANSI_PURPLE = "\u001B[35m";
+    private static final String RESET_COLOR = "\u001B[0m";
 
     public static void printOk(String message) {
-        System.out.println(ANSI_GREEN + message + ANSI_GREEN);
+        System.out.println(ANSI_GREEN + message + RESET_COLOR);
     }
 
     public static void printError(String message) {
-        System.out.println(ANSI_RED + message + ANSI_RED);
+        System.out.println(ANSI_RED + message + RESET_COLOR);
     }
 
     public static void printYELLOW(String message) {
-        System.out.println(ANSI_YELLOW + message + ANSI_YELLOW);
+        System.out.println(ANSI_YELLOW + message + RESET_COLOR);
     }
 
     public static void printRED(String message) {
@@ -24,10 +25,10 @@ public class Logger {
     }
 
     public static void printBLUE(String message) {
-        System.out.println(ANSI_BLUE + message + ANSI_BLUE);
+        System.out.println(ANSI_BLUE + message + RESET_COLOR);
     }
 
     public static void printPURPLE(String message) {
-        System.out.println(ANSI_PURPLE + message + ANSI_PURPLE);
+        System.out.println(ANSI_PURPLE + message + RESET_COLOR);
     }
 }
