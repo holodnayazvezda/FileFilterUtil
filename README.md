@@ -33,22 +33,13 @@
    testImplementation("org.junit.jupiter:junit-jupiter")  
    Ссылка: https://junit.org/junit5/
 
-Плагины Gradle:
-
-- Java Plugin
-- Shadow Plugin 8.1.1  
-  Зависимость:
-  id("com.github.johnrengelman.shadow") version "8.1.1"  
-  Ссылка: https://github.com/johnrengelman/shadow
-
-
 ## Использование
 
 ### Сборка и запуск
 Разработка и тестирование проводились на **Java 23** и **Gradle 8.14.2**.
 
 ```sh
-./gradlew shadowJar
+gradle build
 java -jar build/libs/ShiftTask-all.jar [options] [-a] [-f | -s] [-o <arg>] [-p <arg>]
 ```
 

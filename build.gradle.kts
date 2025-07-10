@@ -1,6 +1,5 @@
 plugins {
-    id("java")
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    java
 }
 
 group = "org.example"
@@ -16,21 +15,40 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
-tasks.jar {
-    manifest {
-        attributes(
-            "Main-Class" to "org.example.Main"
-        )
-    }
-}
-
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(23))
     }
 }
 
-
 tasks.test {
     useJUnitPlatform()
+}
+
+// Таск для создания нормального jarника, чтобы при запуске не было ошибок вида "no main manifest attribute, in build/libs/ShiftTask.jar"
+tasks.register<Jar>("fatJar") {
+    archiveBaseName.set("ShiftTask")
+    archiveClassifier.set("")
+    archiveVersion.set("")
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes["Main-Class"] = "org.example.Main"
+    }
+
+    from(sourceSets.main.get().output)
+
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get()
+            .filter { it.name.endsWith("jar") }
+            .map { zipTree(it) }
+    })
+}
+
+
+// Сделать fatJar задачей по умолчанию при сборке
+tasks.build {
+    dependsOn(tasks.named("fatJar"))
 }
