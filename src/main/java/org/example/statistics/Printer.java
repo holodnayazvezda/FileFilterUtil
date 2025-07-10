@@ -6,7 +6,7 @@ import org.example.statistics.data.ShortStatistics;
 import org.example.statistics.data.StringStatistics;
 import org.example.utils.Logger;
 
-public class StatisticsPrinter {
+public class Printer {
     public static void printShortStatistics(ShortStatistics shortStatisticsData) {
         Logger.printOk("Краткая статистика по работе утилиты:\n");
         Logger.printBLUE("Количество строк типа Integer: " + shortStatisticsData.numberOfInts());

@@ -22,18 +22,12 @@
 ## Используемые библиотеки
 Используемые сторонние библиотеки:
 
-1. Lombok 1.18.38  
-   Зависимость (Gradle):
-   compileOnly("org.projectlombok:lombok:1.18.38")  
-   annotationProcessor("org.projectlombok:lombok:1.18.38")  
-   Ссылка: https://projectlombok.org/
-
-2. Apache Commons CLI 1.9.0  
+1. Apache Commons CLI 1.9.0  
    Зависимость (Gradle):
    implementation("commons-cli:commons-cli:1.9.0")  
    Ссылка: https://commons.apache.org/proper/commons-cli/
 
-3. JUnit Jupiter (JUnit 5) 5.10.0  
+2. JUnit Jupiter (JUnit 5) 5.10.0  
    Зависимость (Gradle):
    testImplementation(platform("org.junit:junit-bom:5.10.0"))  
    testImplementation("org.junit.jupiter:junit-jupiter")  

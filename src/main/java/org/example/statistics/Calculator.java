@@ -1,5 +1,6 @@
 package org.example.statistics;
 
+import org.example.core.data.StatisticsOption;
 import org.example.statistics.data.FloatStatistics;
 import org.example.statistics.data.IntStatistics;
 import org.example.statistics.data.ShortStatistics;
@@ -7,7 +8,7 @@ import org.example.statistics.data.StringStatistics;
 
 import java.util.List;
 
-public class StatisticsCalculator {
+public class Calculator {
 
     public static void calculateShortStatistics(
             List<String> intLines,
@@ -20,7 +21,7 @@ public class StatisticsCalculator {
                 stringLines.size()
         );
 
-        StatisticsPrinter.printShortStatistics(shortStatisticsData);
+        Printer.printShortStatistics(shortStatisticsData);
     }
 
     public static void calculateFullStatisticsForIntegers(List<Long> intValues) {
@@ -31,7 +32,7 @@ public class StatisticsCalculator {
                 intValues.stream().mapToLong(Long::longValue).sum()
         );
 
-        StatisticsPrinter.printFullStatisticsForIntegers(intStatisticsData);
+        Printer.printFullStatisticsForIntegers(intStatisticsData);
     }
 
     public static void calculateFullStatisticsForFloats(List<Double> floatValues) {
@@ -42,7 +43,7 @@ public class StatisticsCalculator {
                 floatValues.stream().mapToDouble(Double::doubleValue).sum()
         );
 
-        StatisticsPrinter.printFullStatisticsForFloats(floatStatisticsData);
+        Printer.printFullStatisticsForFloats(floatStatisticsData);
     }
 
     public static void calculateFullStatisticsForStrings(List<String> stringValues) {
@@ -52,11 +53,11 @@ public class StatisticsCalculator {
                 stringValues.stream().mapToInt(String::length).min().orElse(0)
         );
 
-        StatisticsPrinter.printFullStatisticsForStrings(stringStatisticsData);
+        Printer.printFullStatisticsForStrings(stringStatisticsData);
     }
 
     public static void calculateStatistics(
-            Integer statisticsOption,
+            StatisticsOption statisticsOption,
 
             List<String> intLines,
             List<String> floatLines,
@@ -65,14 +66,9 @@ public class StatisticsCalculator {
             List<Long> intValues,
             List<Double> floatValues
     ) {
-        // Печать статистики в зависимости от выбранного параметра
-        if (statisticsOption == -1) {
-            return;
-        }
-
-        if (statisticsOption == 0) {
+        if (statisticsOption == StatisticsOption.SHORT) {
             calculateShortStatistics(intLines, floatLines, stringLines);
-        } else if (statisticsOption == 1) {
+        } else if (statisticsOption == StatisticsOption.FULL) {
             if (!intLines.isEmpty()) {
                 calculateFullStatisticsForIntegers(intValues);
             }

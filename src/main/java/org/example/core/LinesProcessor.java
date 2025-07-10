@@ -1,21 +1,27 @@
 package org.example.core;
 
-import org.example.statistics.StatisticsCalculator;
-import org.example.utils.FileWorker;
+import org.example.core.data.AppConfiguration;
+import org.example.statistics.Calculator;
+import org.example.utils.ReadWriteUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LinesProcessor {
+    private static final String regexForIntegers = "^-?\\d+$";
+    private static final String regexForFloats = "^-?\\d*\\.\\d*$";
+    private static final String regexForFloatsWithExponent = "^-?\\d+(\\.\\d*)?[eE][+-]?\\d+$";
+
+
     public static int classifyLine(String line) {
         // вернуть 0, если тип int; 1 - если тип float, 2 - если тип String; -1 если строка пустая или null
         if (line == null || line.isEmpty()) {
             return -1;
         }
-        if (line.matches("^-?\\d+$")) {
+        if (line.matches(regexForIntegers)) {
             return 0;
         }
-        if (line.matches("^-?\\d*\\.\\d*$") || line.matches("^-?\\d+(\\.\\d*)?[eE][+-]?\\d+$")) {
+        if (line.matches(regexForFloats) || line.matches(regexForFloatsWithExponent)) {
             return 1;
         }
         return 2;
@@ -25,7 +31,7 @@ public class LinesProcessor {
             AppConfiguration appConfiguration
     ) {
         // получаем все строчки из файлов в требуемом порядке (сначала первая строка из первого, потом первая строка из второго, потом вторая строка из первого и так далее)
-        List<String> lines = FileWorker.getAllLinesFromFiles(appConfiguration.getInputFiles());
+        List<String> lines = ReadWriteUtils.getLinesFromFiles(appConfiguration.inputFiles());
 
         List<String> intLines = new ArrayList<>();
         List<String> floatLines = new ArrayList<>();
@@ -57,42 +63,42 @@ public class LinesProcessor {
         }
 
         if (!stringLines.isEmpty()) {
-            String absolutePathToStringsFile = appConfiguration.absolutePathToFilesDirectory
-                    .concat(appConfiguration.prefixForFilesNames.concat("strings.txt"));
+            String absolutePathToStringsFile = appConfiguration.absolutePathToFilesDirectory()
+                    .concat(appConfiguration.prefixForFilesNames().concat("strings.txt"));
 
-            FileWorker.writeLinesToFile(
+            ReadWriteUtils.writeLinesToFile(
                     absolutePathToStringsFile,
-                    appConfiguration.appendMode,
+                    appConfiguration.appendMode(),
                     stringLines
             );
         }
 
         if (!intLines.isEmpty()) {
-            String absolutePathToIntegersFile = appConfiguration.absolutePathToFilesDirectory
-                    .concat(appConfiguration.prefixForFilesNames.concat("integers.txt"));
+            String absolutePathToIntegersFile = appConfiguration.absolutePathToFilesDirectory()
+                    .concat(appConfiguration.prefixForFilesNames().concat("integers.txt"));
 
-            FileWorker.writeLinesToFile(
+            ReadWriteUtils.writeLinesToFile(
                     absolutePathToIntegersFile,
-                    appConfiguration.appendMode,
+                    appConfiguration.appendMode(),
                     intLines
             );
         }
 
         if (!floatLines.isEmpty()) {
-            String absolutePathToFloatsFile = appConfiguration.absolutePathToFilesDirectory
-                    .concat(appConfiguration.prefixForFilesNames.concat("floats.txt"));
+            String absolutePathToFloatsFile = appConfiguration.absolutePathToFilesDirectory()
+                    .concat(appConfiguration.prefixForFilesNames().concat("floats.txt"));
 
-            FileWorker.writeLinesToFile(
+            ReadWriteUtils.writeLinesToFile(
                     absolutePathToFloatsFile,
-                    appConfiguration.appendMode,
+                    appConfiguration.appendMode(),
                     floatLines
             );
         }
 
 
         // вызываем функцию для вычисления и вывода статистики
-        StatisticsCalculator.calculateStatistics(
-                appConfiguration.statisticsOption,
+        Calculator.calculateStatistics(
+                appConfiguration.statisticsOption(),
                 
                 intLines, 
                 floatLines, 
